@@ -6,6 +6,9 @@ import string
 
 RESET="\033[0m"; BOLD="\033[1m"; GREEN="\033[92m"; RED="\033[91m"; YELLOW="\033[93m"; BLUE="\033[94m"; CYAN="\033[96m"; WHITE="\033[97m"; MAGENTA="\033[95m"
 
+WP_LINK = "https://whatsapp.com/channel/0029VawwXaeEquiIR1CLXA30"
+TG_LINK_APP = "tg://resolve?domain=romanhacker2"
+
 def clear(): os.system("clear")
 
 def show_banner():
@@ -35,10 +38,9 @@ def show_banner():
     {YELLOW}══════════════════════════════════════════════════{RESET}
     """)
 
-# Fake Names and Banks Data
-NAMES = ["John Doe", "Ali Khan", "Sarah Smith", "Muhammad Usman", "Emily Davis", "Hamza Ali", "David Miller", "Ayesha Malik", "Michael Brown", "Bilal Ahmed"]
-BANKS = ["Chase Bank", "Bank of America", "HBL Pakistan", "Meezan Bank", "Wells Fargo", "UBL", "Standard Chartered", "Citibank"]
-COUNTRIES = ["United States", "United Kingdom", "Pakistan", "UAE", "Canada", "Australia"]
+NAMES = ["James Smith", "Michael Brown", "Sarah Johnson", "David Williams", "Emily Davis", "Daniel Miller", "Jessica Wilson", "Matthew Taylor", "Ashley Moore", "Christopher Anderson"]
+BANKS = ["Chase Bank", "Bank of America", "Wells Fargo", "Citibank", "Capital One", "HSBC Bank", "Barclays Bank", "Standard Chartered"]
+CITIES = ["New York, USA", "London, UK", "Los Angeles, USA", "Chicago, USA", "Miami, USA", "Texas, USA", "Manchester, UK"]
 
 def luhn_checksum(card_number):
     def digits_of(n):
@@ -60,16 +62,36 @@ def generate_cc(bin_prefix, length):
             return test_num
     return card_number + "0"
 
+def verification_gate():
+    clear()
+    show_banner()
+    print(f"{RED}{BOLD}  ⚠️  ACCESS LOCKED - CHANNEL VISIT REQUIRED  ⚠️{RESET}\n")
+    print(f"{WHITE}  Please visit our official channels to unlock the tool.{RESET}")
+    print(f"{YELLOW}  Opening Channels... (Please wait){RESET}\n")
+    time.sleep(1.5)
+    
+    print(f"{CYAN}  [~] Opening WhatsApp Channel...{RESET}")
+    # Force open WhatsApp / Business / Messenger
+    os.system(f"am start -a android.intent.action.VIEW -d '{WP_LINK}' > /dev/null 2>&1")
+    time.sleep(4)
+    
+    print(f"{CYAN}  [~] Opening Telegram Channel (Direct App)...{RESET}")
+    # Direct TG App open
+    os.system(f"am start -a android.intent.action.VIEW -d '{TG_LINK_APP}' > /dev/null 2>&1")
+    time.sleep(3)
+    
+    print(f"\n{GREEN}  [✓] Channels Opened. Please join and return here.{RESET}")
+    input(f"{YELLOW}  ► Press ENTER to unlock tool...{RESET}")
+
 def dark_web_animation():
     print(f"{RED}{BOLD}  [!] INITIATING DARK WEB CONNECTION...{RESET}\n")
-    time.sleep(1)
+    time.sleep(0.5)
     
     logs = [
         f"[TOR] Connecting to onion router...",
         f"[TOR] Bypassing firewall...",
         f"[DB] Hitting BIN Database...",
         f"[DB] Extracting valid CC formats...",
-        f"[SYS] Validating checksum algorithm...",
         f"[BANK] Fetching live balances..."
     ]
     
@@ -84,6 +106,9 @@ def dark_web_animation():
     print("\n")
 
 def main():
+    # Yeh line sabse pehle chalegi
+    verification_gate() 
+    
     while True:
         try:
             clear()
@@ -106,7 +131,7 @@ def main():
                 show_banner()
                 
                 try:
-                    amount = int(input(f"{WHITE}{BOLD}  [?] How many CC to generate? (e.g. 1, 5, 10): {RESET}").strip())
+                    amount = int(input(f"{WHITE}{BOLD}  [?] How many CC to generate? (e.g. 1, 5): {RESET}").strip())
                     if amount <= 0: raise ValueError
                 except:
                     print(f"{RED}  [!] Invalid amount!{RESET}")
@@ -120,7 +145,6 @@ def main():
                 print(f"{GREEN}{BOLD}  [✓] GENERATED {amount} CARDS WITH LIVE BALANCES{RESET}\n")
                 
                 for _ in range(amount):
-                    # Generate Card Number
                     if choice == "1": 
                         cc = generate_cc("4", 16)
                         cvv = str(random.randint(100, 999))
@@ -137,11 +161,10 @@ def main():
                     formatted_cc = " ".join([cc[i:i+4] for i in range(0, len(cc), 4)])
                     expiry = f"{random.randint(1,12):02d}/{random.randint(25,30)}"
                     
-                    # Random Realistic Data
                     name = random.choice(NAMES)
                     bank = random.choice(BANKS)
-                    country = random.choice(COUNTRIES)
-                    balance = f"${random.uniform(5000, 75000):,.2f}" # USD Balance
+                    country = random.choice(CITIES)
+                    balance = f"${random.uniform(5000, 85000):,.2f}" 
                     
                     print(f"{CYAN}{BOLD}  ╔══════════════════════════════════════════════════╗")
                     print(f"  ║                 💳 {card_type:<11} CARD                ║")
@@ -154,7 +177,7 @@ def main():
                     print(f"  ║  {YELLOW}BALANCE : {GREEN}{balance:<35} {CYAN}║")
                     print(f"  ╚══════════════════════════════════════════════════╝{RESET}\n")
                     
-                    time.sleep(0.5)
+                    time.sleep(0.3)
                     
                 print(f"\n{RED}{BOLD}  [✓] CARDS INJECTED. USE AT YOUR OWN RISK.{RESET}")
                 
